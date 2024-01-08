@@ -214,8 +214,33 @@ void Key(bool* keys, float speed)
 		MyCamera.RotateZ(-1 * speed);
 	if (keys['A'])
 		MyCamera.RotateY(1 * speed);
+	if (keys['1']) {
+		MyCamera.Position.x = -500;
+		MyCamera.Position.y = 120;
+		MyCamera.Position.z = -300;
+	}if (keys['2']) {
+		MyCamera.Position.x = -500;
+		MyCamera.Position.y = 195;
+		MyCamera.Position.z = 143;
+	}if (keys['3']) {
+		MyCamera.Position.x = 90;
+		MyCamera.Position.y = 294;
+		MyCamera.Position.z = 179;
+	}if (keys['4']) {
+		MyCamera.Position.x = 119;
+		MyCamera.Position.y = 159;
+		MyCamera.Position.z = -328;
+	}
 	if (keys[VK_UP]) {
-		if (MyCamera.MoveForwardCheck(1 * speed).y > 1//ground
+		if (
+			MyCamera.MoveForwardCheck(1 * speed).y > 1//ground
+			&&MyCamera.MoveForwardCheck(1 * speed).y < 300//sky
+			&&(MyCamera.MoveForwardCheck(1 * speed).z < 300&&//leftskybox
+				MyCamera.MoveForwardCheck(1 * speed).z > -350)//rightskybox
+
+			&&(MyCamera.MoveForwardCheck(1 * speed).x > -600&&//frontskybox
+				MyCamera.MoveForwardCheck(1 * speed).x < 150)//backskybox
+			
 			//2nd floor
 			&&!((MyCamera.MoveForwardCheck(1 * speed).x <= -140&& MyCamera.MoveForwardCheck(1 * speed).x > -410)&& (MyCamera.MoveForwardCheck(1 * speed).y < 16)&&(MyCamera.MoveForwardCheck(1 * speed).z<90&& MyCamera.MoveForwardCheck(1 * speed).z > -130))
 			
@@ -225,6 +250,11 @@ void Key(bool* keys, float speed)
 	}
 	if (keys[VK_DOWN]) {
 		if (MyCamera.MoveForwardCheck(-1 * speed).y > 1
+			&& MyCamera.MoveForwardCheck(-1 * speed).y < 300//sky
+			&& (MyCamera.MoveForwardCheck(-1 * speed).z < 300 &&//leftskybox
+				MyCamera.MoveForwardCheck(-1 * speed).z > -350)//rightskybox
+			&& (MyCamera.MoveForwardCheck(-1 * speed).x > -600 &&//frontskybox
+				MyCamera.MoveForwardCheck(-1 * speed).x < 150)//backskybox
 			&& !((MyCamera.MoveForwardCheck(-1 * speed).x <= -140 && MyCamera.MoveForwardCheck(-1 * speed).x > -410) && (MyCamera.MoveForwardCheck(-1 * speed).y < 16) && (MyCamera.MoveForwardCheck(-1 * speed).z<90 && MyCamera.MoveForwardCheck(-1 * speed).z > -130))
 	
 			
@@ -234,6 +264,11 @@ void Key(bool* keys, float speed)
 	}
 	if (keys[VK_RIGHT]) {
 		if (MyCamera.MoveRightCheck(1 * speed).y > 1
+			&& MyCamera.MoveRightCheck(1 * speed).y < 300//sky
+			&& (MyCamera.MoveRightCheck(1 * speed).z < 300 &&//leftskybox
+				MyCamera.MoveRightCheck(1 * speed).z > -350)//rightskybox
+			&& (MyCamera.MoveRightCheck(1 * speed).x > -600 &&//frontskybox
+				MyCamera.MoveRightCheck(1 * speed).x < 150)//backskybox
 			&& !((MyCamera.MoveRightCheck(1 * speed).x <= -140 && MyCamera.MoveRightCheck(1 * speed).x > -410) && (MyCamera.MoveRightCheck(1 * speed).y < 16) && (MyCamera.MoveRightCheck(1 * speed).z<90 && MyCamera.MoveRightCheck(1 * speed).z > -130))
 
 			
@@ -244,6 +279,11 @@ void Key(bool* keys, float speed)
 	}
 	if (keys[VK_LEFT]) {
 		if (MyCamera.MoveRightCheck(-1 * speed).y > 1
+			&& MyCamera.MoveRightCheck(-1 * speed).y < 300//sky
+			&& (MyCamera.MoveRightCheck(-1 * speed).z < 300 &&//leftskybox
+				MyCamera.MoveRightCheck(-1 * speed).z > -350)//rightskybox
+			&& (MyCamera.MoveRightCheck(-1 * speed).x > -600 &&//frontskybox
+				MyCamera.MoveRightCheck(-1 * speed).x < 150)//backskybox
 			&& !((MyCamera.MoveRightCheck(-1 * speed).x <= -140 && MyCamera.MoveRightCheck(-1 * speed).x > -410) && (MyCamera.MoveRightCheck(-1 * speed).y < 16) && (MyCamera.MoveRightCheck(-1 * speed).z<90 && MyCamera.MoveRightCheck(-1 * speed).z > -130))
 
 			) {
@@ -272,7 +312,7 @@ void Key(bool* keys, float speed)
 int image3, leftSideMosque1, leftSideMosque, topMosque,bottomMosque, rightSideMosque, frontSideMosque, ramp, rightSideMosqueFront1Front, rightSideMosqueFront1right, rightSideMosqueFront2front,
 rightSideMosqueFront3front, roofTop, roofSide, roofSideRotated, frontFront, doomSphere, sidePrayer, sideMusiam
 , frontMusiam, frontMusiam2,azan, azanRotated,darkWall, smallDom1, smallDom2, mainGround, mainWall, rotatedMainWall, WallRock1, WallRock2, WallRock3,
-Dom, domWall2, WallRock2Rotated, domPlus, domRoof, grass,sun;
+Dom, domWall2, WallRock2Rotated, domPlus, domRoof, grass,sun, dart;
 
 Model_3DS* tree;
 
@@ -332,6 +372,7 @@ mainGround = LoadTexture("main1.bmp", 255);
 	domPlus = LoadTexture("domPlus.bmp", 255);
 	domRoof = LoadTexture("domRoof.bmp", 255);
 	grass = LoadTexture("grass.bmp", 255);
+	dart = LoadTexture("dart.bmp", 255);
 
 
 
@@ -728,9 +769,11 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	glPopMatrix();
 
 	//main ground
-	r.QuadWithHighAndTextureMainGround(Point(20,0, -60), -120, -1, 89.5, mainGround,5);//89.5 widthtthththth
+	r.QuadWithHighAndTextureMainGround(Point(20,0, -60), -120, -15, 89.5, mainGround,5);//89.5 widthtthththth
 	//2en floor
 	r.QuadWithHighAndTextureMainGround(Point(-32,0, -24), -48, 3, 41.6, mainGround,5);
+	//floor
+	r.QuadWithHighAndTextureMainGround(Point(150,-15, -150), -500, -0.2, 500, dart,25);
 	//right wall
 	r.QuadWithHighAndTextureMainWall(Point(20, 0, -60), -120, 3, 1, mainWall,5);
 	//back wall
@@ -755,9 +798,9 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 
 	glPushMatrix();
 	//glTranslated(-50, -24, 0);
-	glTranslated(-50, -15, 0);
+	glTranslated(-50, -19.5, 0);
 	glRotated(90, 0, 1, 0);
-	glScaled(2, 2, 2);
+	glScaled(2.5, 2.5, 2.5);
 	domOfTheRock();
 	glPopMatrix();
 	
