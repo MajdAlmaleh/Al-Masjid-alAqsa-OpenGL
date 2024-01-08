@@ -46,7 +46,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize Th
 	glLoadIdentity();									// Reset The Projection Matrix
 
 	// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.3f, 1000.0f);
+	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.3f, 1700.0f);
 
 	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
 	glLoadIdentity();									// Reset The Modelview Matrix
@@ -214,14 +214,42 @@ void Key(bool* keys, float speed)
 		MyCamera.RotateZ(-1 * speed);
 	if (keys['A'])
 		MyCamera.RotateY(1 * speed);
-	if (keys[VK_UP])
-		MyCamera.MoveForward(1 * speed);
-	if (keys[VK_DOWN])
-		MyCamera.MoveForward(-1 * speed);
-	if (keys[VK_RIGHT])
-		MyCamera.MoveRight(1 * speed);
-	if (keys[VK_LEFT])
-		MyCamera.MoveRight(-1 * speed);
+	if (keys[VK_UP]) {
+		if (MyCamera.MoveForwardCheck(1 * speed).y > 1//ground
+			//2nd floor
+			&&!((MyCamera.MoveForwardCheck(1 * speed).x <= -140&& MyCamera.MoveForwardCheck(1 * speed).x > -410)&& (MyCamera.MoveForwardCheck(1 * speed).y < 16)&&(MyCamera.MoveForwardCheck(1 * speed).z<90&& MyCamera.MoveForwardCheck(1 * speed).z > -130))
+			
+) {
+			MyCamera.MoveForward(1 * speed);
+		}
+	}
+	if (keys[VK_DOWN]) {
+		if (MyCamera.MoveForwardCheck(-1 * speed).y > 1
+			&& !((MyCamera.MoveForwardCheck(-1 * speed).x <= -140 && MyCamera.MoveForwardCheck(-1 * speed).x > -410) && (MyCamera.MoveForwardCheck(-1 * speed).y < 16) && (MyCamera.MoveForwardCheck(-1 * speed).z<90 && MyCamera.MoveForwardCheck(-1 * speed).z > -130))
+	
+			
+			) {
+			MyCamera.MoveForward(-1 * speed);
+		}
+	}
+	if (keys[VK_RIGHT]) {
+		if (MyCamera.MoveRightCheck(1 * speed).y > 1
+			&& !((MyCamera.MoveRightCheck(1 * speed).x <= -140 && MyCamera.MoveRightCheck(1 * speed).x > -410) && (MyCamera.MoveRightCheck(1 * speed).y < 16) && (MyCamera.MoveRightCheck(1 * speed).z<90 && MyCamera.MoveRightCheck(1 * speed).z > -130))
+
+			
+			
+			) {
+			MyCamera.MoveRight(1 * speed);
+		}
+	}
+	if (keys[VK_LEFT]) {
+		if (MyCamera.MoveRightCheck(-1 * speed).y > 1
+			&& !((MyCamera.MoveRightCheck(-1 * speed).x <= -140 && MyCamera.MoveRightCheck(-1 * speed).x > -410) && (MyCamera.MoveRightCheck(-1 * speed).y < 16) && (MyCamera.MoveRightCheck(-1 * speed).z<90 && MyCamera.MoveRightCheck(-1 * speed).z > -130))
+
+			) {
+			MyCamera.MoveRight(-1 * speed);
+		}
+	}
 	if (keys['O'])
 		MyCamera.MoveUpward(1 * speed);
 	if (keys['L'])
@@ -269,6 +297,8 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 
 
 	glEnable(GL_TEXTURE_2D);
+mainGround = LoadTexture("main1.bmp", 255);
+
 
 	image = LoadTexture("back.bmp", 255);
 	leftSideMosque1 = LoadTexture("leftSideMosque1.bmp", 255);
@@ -291,7 +321,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	azanRotated = LoadTexture("azanRotated.bmp", 255);
 	smallDom1 = LoadTexture("smallDom1.bmp", 255);
 	smallDom2 = LoadTexture("smallDom2.bmp", 255);
-	mainGround = LoadTexture("main1.bmp", 255);
 	mainWall = LoadTexture("mainWall.bmp", 255);
 	rotatedMainWall = LoadTexture("rotatedMainWall.bmp", 255);
 	WallRock1 = LoadTexture("WallRock1.bmp", 255);
@@ -323,7 +352,8 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	ramp = LoadTexture("ramp.bmp", 255);
 	image2 = LoadTexture("DU icon.bmp");
 	image3 = LoadTexture("building.bmp", 255);
-
+	
+	// note if you load a image the opengl while on the GL_Texture_2D himself
 	// skybox
 	SKYFRONT = LoadTexture("front.bmp", 255);
 	SKYBACK = LoadTexture("back.bmp", 255);
@@ -331,7 +361,6 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	SKYRIGHT = LoadTexture("right.bmp", 255);
 	SKYUP = LoadTexture("up.bmp", 255);
 	SKYDOWN = LoadTexture("down.bmp", 255);
-	// note if you load a image the opengl while on the GL_Texture_2D himself
 	glDisable(GL_TEXTURE_2D);
 
 
@@ -466,7 +495,6 @@ void doom()
 }
 
 void domOfTheRock() {
-
 
 	glPushMatrix();
 
@@ -687,12 +715,12 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	draw_trees(1, 6, -94, -173, 0);
 	draw_trees(4, 4, -357, -280.27, 0);*/
 	//-155 ,-280.27 ,0
-	Key(keys, 4);
+	Key(keys, 1);
 	glScaled(5, 5, 5);
 //	glColor3f(1, 0, 0);
 	glPushMatrix();
 	glTranslated(-40, 0, -15);
-	Draw_Skybox(0, 0, 0, 140, 100, 110);
+	Draw_Skybox(20, 0, 0, 280, 300, 210);
 	//Color (0.2, 0.2, 0.2)
 	glPopMatrix();
 	glPushMatrix();
@@ -726,9 +754,10 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 
 
 	glPushMatrix();
-	glTranslated(-50, -24, 0);
+	//glTranslated(-50, -24, 0);
+	glTranslated(-50, -15, 0);
 	glRotated(90, 0, 1, 0);
-	glScaled(3, 3, 3);
+	glScaled(2, 2, 2);
 	domOfTheRock();
 	glPopMatrix();
 	

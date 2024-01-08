@@ -38,8 +38,11 @@ public:
 	void RotateZ ( GLfloat Angle );
 
 	void MoveForward ( GLfloat Distance );
+	Vector3dStruct MoveForwardCheck(GLfloat Distance);
 	void MoveUpward ( GLfloat Distance );
 	void MoveRight ( GLfloat Distance );
+
+	Vector3dStruct MoveRightCheck(GLfloat Distance);
 
 	void SetRotateX(GLfloat Angle);
 
