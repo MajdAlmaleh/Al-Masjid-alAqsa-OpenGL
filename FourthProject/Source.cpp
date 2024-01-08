@@ -853,65 +853,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	r.Stairs(Point(-43.736, 0, 16.33), 11, 5, 90, rightSideMosqueFront2front);
 	r.ColumnsWithTextureAndNum(Point(-46.69, 2, 17.73), 3, 90, rightSideMosqueFront2front);
 	glPopMatrix();
-/*	glEnable(GL_TEXTURE_2D);
-     	glBindTexture(GL_TEXTURE_2D, image2);
-           drawMyCylinder(quadric, 0.0f, 0.0f, 0.0f, 1, 1, 5, 90.0f, 0.0f, 0.0f);
-	glDisable(GL_TEXTURE_2D);*/
 
-	
-	//
-	
-	/*glPushMatrix();
-	glColor3f(1, 1, 1);
-		glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, image3);
-				auxSolidSphere(1);
-		glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-*/
-	/*glPushMatrix();
-	    glRotated(a,0,1,0);
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, image3);    
-			glBegin(GL_QUADS);
-			glTexCoord2f(-1, -1);
-			glVertex3f(5, -5, 0);
-			glTexCoord2f(-1, 0);
-			glVertex3f(5, 5, 0);
-
-
-			glTexCoord2f(0, 0); 
-			
-			glVertex3f(-5, 5, 0);
-			glTexCoord2f(0, -1); 
-			glVertex3f(-5, -5, 0);
-			glEnd();
-		glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-	a+=0.01f;*/
-
-	
-	
-	
-	//glEnable(GL_TEXTURE_2D);
-	//	glBindTexture(GL_TEXTURE_2D, image);
-	//		glBegin(GL_QUADS);
-	//			glTexCoord2f(0, 0);       glVertex3f(5, -5, 0);
-	//			glTexCoord2f(-1, 0);       glVertex3f(5, 5, 0);
-	//			glTexCoord2f(-1, -1);       glVertex3f(-5, 5, 0);
-	//			glTexCoord2f(0, -1);       glVertex3f(-5, -5, 0);
-	//		glEnd();
-	//glDisable(GL_TEXTURE_2D);
-	
-	/*glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, image2);
-			glBegin(GL_QUADS);
-				glTexCoord2f(0.5, 0);       glVertex3f(5, -5, 0);
-				glTexCoord2f(0.5, 0.5);       glVertex3f(5, 5, 0);
-				glTexCoord2f(0, 0.5);       glVertex3f(-5, 5, 0);
-				glTexCoord2f(0, 0);       glVertex3f(-5, -5, 0);
-			glEnd();
-	glDisable(GL_TEXTURE_2D);*/
 
 	return TRUE;
 }
@@ -1226,7 +1168,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	}
 
 	// Create Our OpenGL Window
-	if (!CreateGLWindow("Example", 640, 480, 16, fullscreen))
+	if (!CreateGLWindow("Al Aqsa", 640, 480, 16, fullscreen))
 	{
 		return 0;									// Quit If Window Was Not Created
 	}
