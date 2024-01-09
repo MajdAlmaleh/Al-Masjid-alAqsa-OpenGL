@@ -150,8 +150,7 @@ void Camera::MoveForward( GLfloat Distance )
 {
 	return  Position + (View*Distance);//5,5,5
 }
-//	+		Position	{x=-224.221939 y=8.53415108 z=-267.427856 }	Vector3dStruct
-
+//+		Position	{x=-204.113556 y=16.6030273 z=-5.96903563 }	Vector3dStruct
 //
 void Camera::MoveRight ( GLfloat Distance )
 {

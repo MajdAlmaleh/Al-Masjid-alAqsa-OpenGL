@@ -58,7 +58,7 @@ int  image, image2;
 PrimitiveDrawer r = PrimitiveDrawer();
 
 // skybox
-int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN;
+int SKYFRONT, SKYBACK, SKYLEFT, SKYRIGHT, SKYUP, SKYDOWN,Night;
 
 GLUquadric *quadric = gluNewQuadric();
 
@@ -127,76 +127,164 @@ void Draw_Skybox(float x, float y, float z, float width, float height, float len
 	y = y - height / 2;
 	z = z - length / 2;
 	glEnable(GL_TEXTURE_2D);
+	static float angle2 = 0.0f;
+	float radius2 = 110.0f;
+	float speed2 = 0.005f;        //////// Speeddd
+	float PosX, PosY, PosZ;
+
+	angle2 += speed2;
+	PosX = radius2 * cos(angle2);
+	PosY = radius2 * sin(angle2);
+
+	PosX = radius2 * std::cos(angle2);
+	PosY = radius2 * std::sin(angle2);
+	PosZ = 0.0f;
+
 
 	// Draw Front side
-	glBindTexture(GL_TEXTURE_2D, SKYFRONT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z + length);
-	glEnd();
+	if (PosY >= 1)
+	{
+		glBindTexture(GL_TEXTURE_2D, SKYFRONT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z + length);
+		glEnd();
 
-	// Draw Back side
-	glBindTexture(GL_TEXTURE_2D, SKYBACK);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
-	glEnd();
 
-	// Draw Left side
-	glBindTexture(GL_TEXTURE_2D, SKYLEFT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z + length);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + length);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);
-	glEnd();
+		// Draw Back side
+		glBindTexture(GL_TEXTURE_2D, SKYBACK);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+		glEnd();
 
-	// Draw Right side
-	glBindTexture(GL_TEXTURE_2D, SKYRIGHT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z + length);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z);
-	glEnd();
+		// Draw Left side
+		glBindTexture(GL_TEXTURE_2D, SKYLEFT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);
+		glEnd();
 
-	// Draw Up side
-	glBindTexture(GL_TEXTURE_2D, SKYUP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
-	glEnd();
+		// Draw Right side
+		glBindTexture(GL_TEXTURE_2D, SKYRIGHT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z);
+		glEnd();
 
-	// Draw Down side
-	glBindTexture(GL_TEXTURE_2D, SKYDOWN);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z + length);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z);
-	glEnd();
+		// Draw Up side
+		glBindTexture(GL_TEXTURE_2D, SKYUP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+		glEnd();
 
-	glColor3f(1, 1, 1);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		// Draw Down side
+		glBindTexture(GL_TEXTURE_2D, SKYDOWN);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z);
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z + length);
+		glEnd();
+
+
+		// Draw Back side
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+		glEnd();
+
+		// Draw Left side
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z);
+		glEnd();
+
+		// Draw Right side
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z);
+		glEnd();
+
+		// Draw Up side
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y + height, z);
+		glEnd();
+
+		// Draw Down side
+		glBindTexture(GL_TEXTURE_2D, Night);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, 0x812F);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, 0x812F);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y, z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y, z + length);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z + length);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z);
+		glEnd();
+
+		glColor3f(1, 1, 1);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
 }
 GLfloat ambientColor[] = { 1.f, 0.f,0.f, .5f };
 
@@ -378,9 +466,7 @@ mainGround = LoadTexture("main1.bmp", 255);
 
 
 
-
-
-
+	
 	sidePrayer = LoadTexture("sidePrayer.bmp", 255);
 	doomSphere = LoadTexture("doomSphere.bmp", 255);
 	frontFront = LoadTexture("frontFront.bmp", 255);
@@ -396,6 +482,7 @@ mainGround = LoadTexture("main1.bmp", 255);
 	
 	// note if you load a image the opengl while on the GL_Texture_2D himself
 	// skybox
+	Night = LoadTexture("Night.bmp", 255);
 	SKYFRONT = LoadTexture("front.bmp", 255);
 	SKYBACK = LoadTexture("back.bmp", 255);
 	SKYLEFT = LoadTexture("left.bmp", 255);
@@ -820,6 +907,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	r.patch(Point(-27.76, 0, -14.3), 10, .4, 2, 1, 1.13, grass, rightSideMosqueFront2front);
 	r.patch(Point(-27.76, 0, 6.3), 10, .4, 2, 1, 1.3, grass, rightSideMosqueFront2front);/////
 	r.patch(Point(-45.25, 0, -54.2), 10, .4, 1, 1, 2, grass, rightSideMosqueFront2front);
+	
 	//-69.13,0,-54.2
 	r.patch(Point(-69.13, 0, -54.2),10,.4,2,1,2, grass, rightSideMosqueFront2front);
 	//r.SmallMinaretWithTexture(Point(-50, 3, -20), 2, 1, 2, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, darkWall);
@@ -829,6 +917,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	
 	glPushMatrix();
 	//glRotatef(270, 0, 0, 0);
+	r.transparent(Point(-40.9, 3, -1.25), 2.5, 2.5);
 	r.patch(Point(-27.76, 0, 18), 10, .4,2,1,1, grass, rightSideMosqueFront2front);
 	glPopMatrix();
 	glPushMatrix();
@@ -838,8 +927,11 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	//View	{x=- y=0.00000000 z=-0.0523359701 }	Vector3dStruct
 	r.patch(Point(-69.13, 0, -34.55), 10, .4, 2, 1, 1, grass, rightSideMosqueFront2front);
 	r.patch(Point(-45.25, 0, -34.55), 10, .4, 1, 1, 1, grass, rightSideMosqueFront2front);
-	r.buildingWithTexture(Point(-98.21, 0, 14.67), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
+	r.buildingWithTexture(Point(-98.93, 0, 14.67), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
 	r.buildingWithTexture(Point(-98.93, 0, -58.97), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
+	r.buildingWithTexture(Point(-98.93, 0, -22.82), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
+	r.buildingWithTexture(Point(-98.93, 0, -40.89), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
+	r.buildingWithTexture(Point(-98.93, 0, -4.075), 3, 7, 5, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1, smallDom1);
 	r.patch(Point(-41.164, 0, 17.78), 10, .4, -.66, 1, 1, grass, rightSideMosqueFront2front);
 	r.SmallMinaretWithTexture(Point(-74.29, 3, 10.16), 2, 3.5, 2, smallDom2, smallDom2, smallDom2, smallDom2, smallDom2, smallDom2, darkWall);
 	glPopMatrix();

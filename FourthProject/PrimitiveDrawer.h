@@ -39,6 +39,7 @@ public:
 		void buildingWithTexture(Point v1, float scaleX, float scaleY, float scaleZ,
 			int bottomImage, int frontImage, int rightImage,
 			int leftImage, int backImage, int topImage);
+		void transparent(Point v1, float width, float height);
 };
 
 #endif

@@ -299,7 +299,25 @@ void PrimitiveDrawer::DrawQuadTexture2(Point v1, Point v2, Point v3, Point v4, i
 
 }
 
+void PrimitiveDrawer::transparent(Point v1, float width,float height)
+{
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // Set the color with alpha value (e.g., 0.5 for semi-transparent)
+    glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+
+    // Draw the transparent quad
+    glBegin(GL_QUADS);
+    glVertex3f(v1.x, v1.y, v1.z);
+    glVertex3f(v1.x , v1.y, v1.z + width);
+    glVertex3f(v1.x , v1.y + height, v1.z + width);
+    glVertex3f(v1.x, v1.y + height, v1.z );
+    glEnd();
+
+    // Disable blending after drawing
+    glDisable(GL_BLEND);
+}
 
 
 
