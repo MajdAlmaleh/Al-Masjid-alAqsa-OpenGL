@@ -16,6 +16,7 @@
 
 #include "sound.h"
 DirectSoundBuffer Sound;
+DirectSoundBuffer Sound2;
 DirectSoundManager SoundManager; 
 
 
@@ -298,6 +299,10 @@ void Key(bool* keys, float speed)
 		MyCamera.RotateY(-1 * speed);
 	if (keys['Z'])
 		MyCamera.RotateZ(1 * speed);
+	if (keys['H'])
+		Sound.Stop();
+	if (keys['J'])
+		Sound2.Play(0);
 	if (keys['X'])
 		MyCamera.RotateZ(-1 * speed);
 	if (keys['A'])
@@ -335,6 +340,16 @@ void Key(bool* keys, float speed)
 ) {
 			MyCamera.MoveForward(1 * speed);
 		}
+
+		if (((MyCamera.MoveForwardCheck(1 * speed).x <= -140 && MyCamera.MoveForwardCheck(1 * speed).x > -410) && (MyCamera.MoveForwardCheck(1 * speed).y > 16) && (MyCamera.MoveForwardCheck(1 * speed).z<90 && MyCamera.MoveForwardCheck(1 * speed).z > -130))) {
+			Sound.Stop();
+			Sound2.Play(0);
+		}if (!((MyCamera.MoveForwardCheck(1 * speed).x <= -140 && MyCamera.MoveForwardCheck(1 * speed).x > -410) && (MyCamera.MoveForwardCheck(1 * speed).y > 16) && (MyCamera.MoveForwardCheck(1 * speed).z<90 && MyCamera.MoveForwardCheck(1 * speed).z > -130))) {
+			Sound2.Stop();
+			Sound.Play(0);
+		}
+
+
 	}
 	if (keys[VK_DOWN]) {
 		if (MyCamera.MoveForwardCheck(-1 * speed).y > 1
@@ -347,7 +362,17 @@ void Key(bool* keys, float speed)
 	
 			
 			) {
+
 			MyCamera.MoveForward(-1 * speed);
+		}
+
+
+		if (((MyCamera.MoveForwardCheck(-1 * speed).x <= -140 && MyCamera.MoveForwardCheck(-1 * speed).x > -410) && (MyCamera.MoveForwardCheck(-1 * speed).y > 16) && (MyCamera.MoveForwardCheck(-1 * speed).z<90 && MyCamera.MoveForwardCheck(-1 * speed).z > -130))) {
+			Sound.Stop();
+			Sound2.Play(0);
+		}if (!((MyCamera.MoveForwardCheck(-1 * speed).x <= -140 && MyCamera.MoveForwardCheck(-1 * speed).x > -410) && (MyCamera.MoveForwardCheck(-1 * speed).y > 16) && (MyCamera.MoveForwardCheck(-1 * speed).z<90 && MyCamera.MoveForwardCheck(-1 * speed).z > -130))) {
+			Sound2.Stop();
+			Sound.Play(0);
 		}
 	}
 	if (keys[VK_RIGHT]) {
@@ -364,6 +389,16 @@ void Key(bool* keys, float speed)
 			) {
 			MyCamera.MoveRight(1 * speed);
 		}
+
+		if (((MyCamera.MoveRightCheck(1 * speed).x <= -140 && MyCamera.MoveRightCheck(1 * speed).x > -410) && (MyCamera.MoveRightCheck(1 * speed).y > 16) && (MyCamera.MoveRightCheck(1 * speed).z<90 && MyCamera.MoveRightCheck(1 * speed).z > -130))) {
+			Sound.Stop();
+			Sound2.Play(0);
+		}if (!((MyCamera.MoveRightCheck(1 * speed).x <= -140 && MyCamera.MoveRightCheck(1 * speed).x > -410) && (MyCamera.MoveRightCheck(1 * speed).y > 16) && (MyCamera.MoveRightCheck(1 * speed).z<90 && MyCamera.MoveRightCheck(1 * speed).z > -130))) {
+			Sound2.Stop();
+			Sound.Play(0);
+		}
+
+
 	}
 	if (keys[VK_LEFT]) {
 		if (MyCamera.MoveRightCheck(-1 * speed).y > 1
@@ -377,6 +412,19 @@ void Key(bool* keys, float speed)
 			) {
 			MyCamera.MoveRight(-1 * speed);
 		}
+
+
+		if (((MyCamera.MoveRightCheck(-1 * speed).x <= -140 && MyCamera.MoveRightCheck(-1 * speed).x > -410) && (MyCamera.MoveRightCheck(-1 * speed).y > 16) && (MyCamera.MoveRightCheck(-1 * speed).z<90 && MyCamera.MoveRightCheck(-1 * speed).z > -130))) {
+			Sound.Stop();
+			Sound2.Play(0);
+		}if (!((MyCamera.MoveRightCheck(-1 * speed).x <= -140 && MyCamera.MoveRightCheck(-1 * speed).x > -410) && (MyCamera.MoveRightCheck(-1 * speed).y > 16) && (MyCamera.MoveRightCheck(-1 * speed).z<90 && MyCamera.MoveRightCheck(-1 * speed).z > -130))) {
+			Sound2.Stop();
+			Sound.Play(0);
+		}
+
+
+
+
 	}
 	if (keys['O'])
 		MyCamera.MoveUpward(1 * speed);
@@ -419,8 +467,8 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 	
    SoundManager.Initialize(hWnd);
    SoundManager.CreateSound("Bird.wav", Sound);
- //  SoundManager.Initialize(hWnd);
- //  SoundManager.CreateSound("Azan.wav", Sound);
+   SoundManager.Initialize(hWnd);
+   SoundManager.CreateSound("Azan.wav", Sound2);
    
 
 
@@ -518,6 +566,9 @@ mainGround = LoadTexture("main1.bmp", 255);
 	MyCamera.Position.x = -50;
 	MyCamera.Position.y = 20;
 	MyCamera.Position.z = 20;
+
+
+	Sound.Play(0);
 	return TRUE;										// Initialization Went OK
 }
 
@@ -829,7 +880,7 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	
-	Sound.Play(0);
+	
 
 	mouse(mouseX, mouseY, isClicked, isRClicked);
 	MyCamera.Render();
